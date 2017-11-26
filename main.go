@@ -9,10 +9,10 @@ import (
 )
 
 var (
-	apiKey    = ""
-	secretKey = ""
+	apiKey    = "6O_7WbgB68arJkP1W5pwaHTz"
+	secretKey = "LHyhXp982XvKNfAhWK1TCrf2TTNblJ23BIRWo95LQOzw2gGg"
 	config    = swagger.NewConfigurationWithKey(apiKey, secretKey)
-)
+)	
 
 func main() {
 	testOrderBook()
@@ -71,7 +71,9 @@ func testPosition() {
 		log.Println("error: ", err)
 	}
 	log.Println(response.Status)
-	log.Println(positions[0])
+	for _, position := range positions {
+		log.Println(position)
+	}
 }
 
 func testOrderBook() {
