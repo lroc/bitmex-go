@@ -4,15 +4,22 @@ import (
 	"log"
 	"time"
 
-	"github.com/qct/bitmex-go/swagger"
 	. "github.com/qct/bitmex-go/restful"
+	"github.com/qct/bitmex-go/swagger"
+	"os"
 )
 
 var (
-	apiKey    = "6O_7WbgB68arJkP1W5pwaHTz"
-	secretKey = "LHyhXp982XvKNfAhWK1TCrf2TTNblJ23BIRWo95LQOzw2gGg"
-	config    = swagger.NewConfigurationWithKey(apiKey, secretKey)
-)	
+	apiKey    = ""
+	secretKey = ""
+	config    *swagger.Configuration
+)
+
+func init() {
+	apiKey = os.Getenv("BITMEX_API_KEY")
+	secretKey = os.Getenv("BITMEX_API_SECRET")
+	config = swagger.NewConfigurationWithKey(apiKey, secretKey)
+}
 
 func main() {
 	testOrderBook()
@@ -21,6 +28,7 @@ func main() {
 	testMargin()
 	testChat()
 }
+
 func testChat() {
 	log.Println("-----------test chat------------")
 	chatApi := swagger.NewChatApiWithConfig(config)
@@ -31,6 +39,7 @@ func testChat() {
 	log.Println(response.Status)
 	log.Println(*chat)
 }
+
 func testGetOrder() {
 	log.Println("-----------test get order------------")
 	orderApi := swagger.NewOrderApiWithConfig(config)
@@ -42,6 +51,7 @@ func testGetOrder() {
 	log.Println(response.Status)
 	log.Println("margin:", orders[0])
 }
+
 func testMargin() {
 	log.Println("-----------test margin------------")
 	userApi := swagger.NewUserApiWithConfig(config)
@@ -52,6 +62,7 @@ func testMargin() {
 	log.Println(response.Status)
 	log.Println("margin:", *margin)
 }
+
 func testWallet() {
 	log.Println("-----------test wallet------------")
 	userApi := swagger.NewUserApiWithConfig(config)
